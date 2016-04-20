@@ -1,6 +1,7 @@
 package com.github.TKWensday1115.Chart7ComplexBarChart;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -13,6 +14,10 @@ public class Main extends Application {
 
         ComplexBarChart sbc = new ComplexBarChart();
 
+        Scene scene = new Scene(sbc, 800, 600);
+//        sbc.getData().addAll(series1, series2, series3);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
