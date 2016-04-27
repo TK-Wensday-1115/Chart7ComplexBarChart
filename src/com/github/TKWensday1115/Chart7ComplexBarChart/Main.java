@@ -15,9 +15,9 @@ public class Main extends Application {
 
         ComplexBarChart sbc = new ComplexBarChart();
         sbc.setHistoryLength(7);
+        sbc.setTitle("Inside Component Title");
 
         Scene scene = new Scene(sbc, 800, 600);
-//        sbc.getData().addAll(series1, series2, series3);
         stage.setScene(scene);
         stage.show();
 
