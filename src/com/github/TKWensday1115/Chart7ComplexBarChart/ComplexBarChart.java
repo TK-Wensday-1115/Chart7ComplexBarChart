@@ -11,12 +11,11 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Predicate;
 
 /**
  * Created by Grzegorz on 2016-04-20.
  */
-public class ComplexBarChart extends StackedBarChart<String, Number> implements IComplexBarChart {
+public class ComplexBarChart extends StackedBarChart<String, Number>  {
 
     private CategoryAxis xAxis;
     private NumberAxis yAxis;
@@ -40,12 +39,11 @@ public class ComplexBarChart extends StackedBarChart<String, Number> implements 
         xAxis.setCategories(categoriesManager.getCategories());  // FXCollections.<String>observableArrayList(Arrays.asList("czas1", "2", "3", "4"))
     }
 
-    @Override
-    public void AddData(String seriesName, String timeValue, Number number) {
+    public void addData(String seriesName, String timeValue, Number number) {
 
-        categoriesManager.AddCategory(timeValue);
+        categoriesManager.addCategory(timeValue);
 
-        seriesManager.AddDataToSeries(seriesName, timeValue, number);
+        seriesManager.addDataToSeries(seriesName, timeValue, number);
 
 //        ObservableList<String> newCategories = xAxis.getCategories();
 //        newCategories.add(timeValue);
@@ -53,7 +51,6 @@ public class ComplexBarChart extends StackedBarChart<String, Number> implements 
 
     }
 
-    @Override
     public void setHistoryLength(int length) {
         categoriesManager.setHistoryLength(length);
     }
@@ -72,7 +69,7 @@ public class ComplexBarChart extends StackedBarChart<String, Number> implements 
             return categories;
         }
 
-        public void AddCategory(String timeValue) {
+        public void addCategory(String timeValue) {
             if (!categories.contains(timeValue)) {
                 categories.add(timeValue);
                 categories.sort(new Comparator(){
@@ -82,7 +79,7 @@ public class ComplexBarChart extends StackedBarChart<String, Number> implements 
                 });
                 if(categories.size()>historyLength) {
                     String categoryToDelete = categories.remove(0);
-                    seriesManager.DeleteCategoryFromAllSeries(categoryToDelete);
+                    seriesManager.deleteCategoryFromAllSeries(categoryToDelete);
                 }
             }
         }
@@ -101,7 +98,7 @@ public class ComplexBarChart extends StackedBarChart<String, Number> implements 
             seriesMap = new HashMap<>();
         }
 
-        public void AddDataToSeries(String seriesName, String timeValue, Number number) {
+        public void addDataToSeries(String seriesName, String timeValue, Number number) {
 
             XYChart.Series<String, Number> series = getSeriesByName(seriesName);
             series.getData().add(new XYChart.Data<String, Number>(timeValue, number));
@@ -124,7 +121,7 @@ public class ComplexBarChart extends StackedBarChart<String, Number> implements 
             return returnSeries;
         }
 
-        public void DeleteCategoryFromAllSeries(String categoryToDelete) {
+        public void deleteCategoryFromAllSeries(String categoryToDelete) {
             for (XYChart.Series<String, Number> series : seriesMap.values()) {
                 series.getData().removeIf(data -> {
                     if(((String)(data.getXValue())).equals(categoryToDelete))
